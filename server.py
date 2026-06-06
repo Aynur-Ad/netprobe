@@ -1,6 +1,7 @@
 import socket
 import os
-from config import SERVER_HOST, SERVER_PORT, BUFFER_SIZE
+import random  
+from config import SERVER_HOST, SERVER_PORT, BUFFER_SIZE, LOSS_RATE 
 from checksum import calculate_sha256
 from logger import log_event
 
@@ -18,6 +19,12 @@ received_sequences = set()
 with open(file_path, "wb") as file:
     while True:
         data, client_address = server_socket.recvfrom(BUFFER_SIZE)
+
+        # --- YAPAY KAYIP SİMÜLASYONU ---
+        if random.random() < LOSS_RATE:
+            print("Yapay Kayıp: Paket bilerek yok sayıldı!")
+            continue  # Döngünün başına dön, paketi işleme ve ACK gönderme
+        # -------------------------------
 
         if data.startswith(b"END|"):
             received_hash = data.decode("utf-8").split("|")[1]
