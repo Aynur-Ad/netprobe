@@ -31,6 +31,9 @@ with open(file_path, "rb") as file:
         retry_count = 0
 
         while not success and retry_count < MAX_RETRIES:
+            # Paketi göndermeden hemen önce RTT için başlangıç zamanını alıyoruz
+            start_time = time.time()
+            
             client_socket.sendto(packet, (SERVER_HOST, SERVER_PORT))
             log_event(f"PACKET_SENT seq={sequence_number} attempt={retry_count + 1}")
             print(f"Paket gönderildi. Sequence: {sequence_number}, Deneme: {retry_count + 1}")
@@ -40,8 +43,13 @@ with open(file_path, "rb") as file:
                 ack_message = ack.decode("utf-8")
 
                 if ack_message == f"ACK|{sequence_number}":
-                    print(f"ACK alındı. Sequence: {sequence_number}")
-                    log_event(f"ACK_RECEIVED seq={sequence_number}")
+                    # Doğru ACK geldiğinde zamanı durdurup RTT hesaplıyoruz
+                    end_time = time.time()
+                    rtt = end_time - start_time
+                    
+                    print(f"ACK alındı. Sequence: {sequence_number}, RTT: {rtt:.4f}s")
+                    log_event(f"ACK_RECEIVED seq={sequence_number} rtt={rtt:.4f}")
+                    
                     success = True
                     sequence_number += 1
                 else:
