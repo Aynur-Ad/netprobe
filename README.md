@@ -62,23 +62,46 @@ python plot_experiments.py
 
 ## 📊 Deney Sonuçları ve Grafikler
 
-Proje kapsamında sistemimiz üç farklı koşul altında test edilmiş, elde edilen metrikler `results/` klasörü altında görselleştirilmiştir:
+Proje kapsamında farklı ağ koşulları altında çeşitli performans deneyleri gerçekleştirilmiştir. Elde edilen sonuçlar `results/` klasöründe grafikler halinde saklanmıştır.
 
 ### 1. Yapay Paket Kaybı Senaryosu
 
-`config.py` üzerinden `%0, %10 ve %20` kayıp oranları simüle edilmiştir. Paket kaybı arttıkça sistemin daha fazla yeniden gönderim yaptığı, ortalama gecikmelerin arttığı ve sonuç olarak Goodput değerinin düştüğü gözlemlenmiştir.
+Farklı paket kaybı oranlarının sistem performansına etkisi incelenmiştir.
 
-### 2. Paket Boyutu (Chunk Size) Senaryosu
+![Paket Kaybı Analizi](results/senaryo1_kayip_orani.png)
 
-`512, 1024 ve 2048 Byte` boyutlarında paketler test edilmiştir. Çok küçük paketlerin (512 Byte) toplamda paket başlığı (header) yükünü artırdığı ve throughput'u olumsuz etkilediği görülmüştür.
+Bu deneyde paket kaybı arttıkça yeniden gönderim (retransmission) sayısının yükseldiği ve sistemin etkin veri aktarım oranının (goodput) düştüğü gözlemlenmiştir.
 
-### 3. Timeout Değerinin Etkisi
+---
 
-`0.5s, 1.0s ve 2.0s` değerleri test edilmiştir. Çok kısa timeout değerlerinin, gereksiz yere "Retransmission" (yeniden gönderim) patlamalarına yol açtığı tespit edilmiştir.
+### 2. Paket Boyutu Senaryosu
 
-### 📊 Genel Performans Özet Grafiği
+512 Byte, 1024 Byte ve 2048 Byte paket boyutları test edilmiştir.
 
-Tüm bu senaryoların bir arada değerlendirildiği ve karşılaştırıldığı genel performans çıktıları:
+![Paket Boyutu Analizi](results/senaryo2_paket_boyutu.png)
+
+Küçük paket boyutlarında başlık (header) yükünün arttığı, büyük paket boyutlarında ise daha yüksek throughput değerlerine ulaşıldığı görülmüştür.
+
+---
+
+### 3. Timeout Süresi Senaryosu
+
+0.5 saniye, 1 saniye ve 2 saniye timeout değerleri karşılaştırılmıştır.
+
+![Timeout Analizi](results/senaryo3_timeout.png)
+
+Çok düşük timeout değerlerinde gereksiz yeniden gönderimlerin arttığı, çok yüksek timeout değerlerinde ise hata tespit süresinin uzadığı gözlemlenmiştir.
+
+---
+
+### 4. Genel Performans Özeti
+
+Tüm deney sonuçlarının genel karşılaştırması aşağıdaki grafikte verilmiştir.
+
+![Genel Performans Özeti](results/performance_graphs.png)
+
+Bu grafikler sistemin farklı ağ koşulları altında davranışını göstermekte ve geliştirilen güvenilir UDP protokolünün performansını değerlendirmeye yardımcı olmaktadır.
+
 
 ---
 
@@ -87,3 +110,13 @@ Tüm bu senaryoların bir arada değerlendirildiği ve karşılaştırıldığı
 * **Mükerrer Paket (Duplicate) Sorunu:** Testler sırasında timeout nedeniyle tekrar gönderilen paketlerin, sunucu tarafında dosyaya iki kez yazılması sonucu dosya bütünlüğünün bozulduğu fark edildi. Bu sorun, sunucu tarafına gelen paketlerin `Sequence Number` değerlerinin bir küme (`set`) içerisinde tutulması ve mükerrer paketlerin sadece ACK döndürülüp dosyaya yazılmaması ile çözüldü.
 * **Yanlış RTT Hesaplanması:** Zaman aşımına uğrayan ve tekrar gönderilen paketlerin ilk gönderim zamanı baz alındığında, RTT değerlerinin gerçek dışı şekilde yüksek çıktığı görüldü. `client.py` içerisindeki süre başlatma fonksiyonu (`start_time`), her yeniden gönderim döngüsünün en başına alınarak bu mantıksal hata giderildi.
 * **Windows Komut Satırı Sorunu:** Başlangıçta betikleri çalıştırırken `python3` komutu tanımlanmadığı için hatalar alındı. Çözüm olarak geliştirme ve test ortamında `python` veya `py` çağrılarına geçiş yapıldı.
+
+---
+
+## 👨‍💻 Geliştiriciler
+
+- Aynur Adıbelli
+- Zeynep Kaya
+
+Bursa Teknik Üniversitesi 
+Bilgisayar Ağları Dersi Dönem Projesi (2025-2026)
