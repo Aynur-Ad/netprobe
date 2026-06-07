@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
 import os
 
-# ==============================================================================
-# 1. ADIM: DENEY SONUÇLARINI BURAYA GİRİN (analyzer.py'dan alınan değerler)
-# ==============================================================================
+
 
 # --- SENARYO 1: Yapay Paket Kaybı Oranının Etkisi ---
 loss_labels = ['%0 Kayıp', '%10 Kayıp', '%20 Kayıp']
@@ -26,10 +24,6 @@ timeout_goodput          = [3.54, 3.33, 3.10]  # KB/s
 timeout_completion_time  = [0.0196, 0.0208, 0.0224]  # Saniye
 timeout_retransmission   = [0.0024, 0.0023, 0.0022]  # Yüzde (%)
 
-
-# ==============================================================================
-# 2. ADIM: GRAFİK ÇİZİM FONKSİYONU (Aşağıya dokunmana gerek yok)
-# ==============================================================================
 
 def ciz_ve_kaydet(baslik, etiketler, throughput, goodput, completion_time, retransmission, dosya_adi):
     fig, axs = plt.subplots(2, 2, figsize=(12, 10))
@@ -66,7 +60,7 @@ def ciz_ve_kaydet(baslik, etiketler, throughput, goodput, completion_time, retra
     print(f"Grafik kaydedildi: {kayit_yolu}")
     plt.close() # Diğer grafiklerle karışmaması için pencereyi kapat
 
-# --- GRAFİKLERİ ÜRET ---
+
 
 if not os.path.exists("results"):
     os.makedirs("results")
