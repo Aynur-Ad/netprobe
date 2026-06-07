@@ -2,11 +2,11 @@ import os
 import re
 import matplotlib.pyplot as plt
 
-# Dosya yolları
+
 LOG_FILE = "logs/transfer.log"
 TEST_FILE = "input_files/test.txt"
 
-# Sabitler (Kendi config.py dosyanla uyumlu olmalı)
+
 CHUNK_SIZE = 1024  
 HEADER_SIZE = 15   # DATA|seq| gibi başlıkların tahmini byte boyutu
 
@@ -15,7 +15,7 @@ def analyze_logs():
         print(f"Hata: {LOG_FILE} bulunamadı! Önce client ve server'ı çalıştırıp log üretmelisin.")
         return
 
-    # Olay sayaçları
+   
     events = {
         "PACKET_SENT": 0,
         "ACK_RECEIVED": 0,
@@ -41,8 +41,6 @@ def analyze_logs():
                 events["TIMEOUT"] += 1
             elif "RETRANSMISSION" in line:
                 events["RETRANSMISSION"] += 1
-
-    # --- METRİK HESAPLAMALARI ---
     
     # 1. Retransmission Rate
     total_sent = events["PACKET_SENT"]
@@ -73,7 +71,6 @@ def analyze_logs():
         throughput_bps = 0
         goodput_bps = 0
 
-    # --- SONUÇLARI YAZDIRMA ---
     print("\n" + "="*40)
     print("AĞ PERFORMANS ANALİZ RAPORU")
     print("="*40)
@@ -89,7 +86,6 @@ def analyze_logs():
     print(f"Goodput:                 {goodput_bps / 1024:.2f} KB/s")
     print("="*40 + "\n")
 
-    # --- GRAFİK ÇİZİMLERİ (Matplotlib) ---
     plot_results(events, rtt_values)
 
 def plot_results(events, rtt_values):
