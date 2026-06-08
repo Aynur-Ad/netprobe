@@ -58,7 +58,7 @@ def ciz_ve_kaydet(baslik, etiketler, throughput, goodput, completion_time, retra
     kayit_yolu = f"results/{dosya_adi}.png"
     plt.savefig(kayit_yolu)
     print(f"Grafik kaydedildi: {kayit_yolu}")
-    plt.close() # Diğer grafiklerle karışmaması için pencereyi kapat
+    plt.close() 
 
 
 

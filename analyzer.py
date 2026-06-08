@@ -58,9 +58,6 @@ def analyze_logs():
     total_bytes_sent = total_sent * (CHUNK_SIZE + HEADER_SIZE)
     
     # Completion Time (Yaklaşık)
-    # Eger logger.py dosyasında timestamp (zaman damgası) yoksa, 
-    # geçen süreyi RTT'lerin toplamı + timeout bekleme süreleri olarak tahmin edebiliriz.
-    # (Not: Eğer logger.py zaman damgası basıyorsa, ilk ve son satırın zaman farkını almak daha kesin olur).
     estimated_completion_time = sum(rtt_values) + (events["TIMEOUT"] * 0.5) # 0.5 = config.TIMEOUT
     
     # 4. Throughput ve Goodput (Byte/Saniye -> KB/Saniye)
