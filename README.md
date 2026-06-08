@@ -4,6 +4,12 @@ Bu proje, **Bursa Teknik Üniversitesi Bilgisayar Ağları dersi dönem projesi*
 
 ---
 
+# GitHub Repository
+
+https://github.com/Aynur-Ad/netprobe
+
+---
+
 ## 📌 Protokol Açıklaması
 
 NetProbe, UDP'nin doğasında bulunmayan güvenilirlik mekanizmalarını kendi özel iletişim protokolü ile sağlar:
