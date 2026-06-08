@@ -10,6 +10,26 @@ https://github.com/Aynur-Ad/netprobe
 
 ---
 
+## 📦 Gereksinimler ve Kurulum
+
+Bu proje Python 3.12.3 ile geliştirilmiştir.
+
+Harici bağımlılık:
+
+```
+pip install matplotlib
+```
+
+Alternatif olarak proje dizininde bulunan `requirements.txt` dosyası kullanılarak kurulum yapılabilir:
+
+```
+pip install -r requirements.txt
+```
+
+```
+matplotlib
+```
+
 ## 📌 Protokol Açıklaması
 
 NetProbe, UDP'nin doğasında bulunmayan güvenilirlik mekanizmalarını kendi özel iletişim protokolü ile sağlar:
